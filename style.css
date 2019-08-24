@@ -1,0 +1,30 @@
+
+table{
+    margin:20% auto auto auto;
+    background-color:#000000
+}
+
+table, td, #result{
+    border:1px solid black;
+    font-size:40px;
+}
+
+td{
+    background-color:#c02e2e;
+    padding:5px;
+    text-align:center;
+}
+
+#result{
+    background-color:rgb(199, 199, 199);
+    text-align:right;
+    width:200px
+};
+
+td{
+    cursor: pointer;
+}
+
+#C, #DEL{
+    font-size:33px;
+}
