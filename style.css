@@ -1,14 +1,15 @@
 
 table{
     margin:20% auto auto auto;
-    background-color:#000000
+    background-color:#000000;
+    font-family:sans-serif;
 }
 
 td{
     background-color:#c02e2e;
     padding:3px 10px 3px 10px;
     text-align:center;
-    font-size:40px;
+    font-size:36px;
     cursor:pointer;
 }
 
@@ -16,6 +17,7 @@ td{
     background-color:rgb(199, 199, 199);
     text-align:right;
     width:200px;
+    height:45px;
     cursor:auto;
 }
 
