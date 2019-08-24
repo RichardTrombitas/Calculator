@@ -24,3 +24,7 @@ td{
 #C, #DEL{
     font-size:33px;
 }
+
+td:not(#result){
+    cursor:pointer;
+}
