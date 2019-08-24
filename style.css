@@ -4,27 +4,21 @@ table{
     background-color:#000000
 }
 
-table, td, #result{
-    border:1px solid black;
-}
-
 td{
     background-color:#c02e2e;
     padding:3px 10px 3px 10px;
     text-align:center;
     font-size:40px;
+    cursor:pointer;
 }
 
 #result{
     background-color:rgb(199, 199, 199);
     text-align:right;
     width:200px;
-};
-
-#C, #DEL{
-    font-size:33px;
+    cursor:auto;
 }
 
-td:not(#result){
-    cursor:pointer;
+#C, #DEL{
+    font-size:30px;
 }
