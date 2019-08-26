@@ -39,6 +39,7 @@ function registerKey(eventObject) {
     else if (key==".")
     {
         //debugger;
+        calculatedResult = false;
         lastStringElement = operationsArray[operationsArray.length-1];
         if(Number.isInteger(parseFloat(lastStringElement)) && lastStringElement[lastStringElement.length-1]!=".")
         {
