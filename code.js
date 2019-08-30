@@ -23,7 +23,42 @@ function makeDimmer(id) {
     button.style.backgroundColor = "#641818";
 }
 
-var resultElement = document.getElementById("result"); // calculator screen
+function updateResult(res)
+{
+    var resultElement = document.getElementById("result"); // calculator screen
+    resultElement.innerHTML = res;
+    len = resultElement.innerHTML.length;
+    console.log(len);
+    if(len >= 10 && len < 13)
+    {
+        newSize = 44-len-4;
+        resultElement.style.fontSize = newSize+"px";
+    }
+    else if(len >= 13 && len < 18)
+    {
+        newSize = 44-len-6;
+        resultElement.style.fontSize = newSize+"px";
+    }
+    else if(len >= 18 && len < 21)
+    {
+        resultElement.style.fontSize = "17.5px";
+    }
+    else if(len >= 21 && len < 23)
+    {
+        resultElement.style.fontSize = "16px";
+    }
+    else if(len>=23)
+    {
+        resultElement.style.fontSize = "15.5px";
+    }
+    else
+    {
+        resultElement.style.fontSize = "35px";
+    }
+   
+}
+
+
 
 var operationsArray = ["0"];
 var showZero = true;
@@ -39,7 +74,8 @@ function registerKey(eventObject) {
     if(key=="C")
     {
         operationsArray = ["0"];
-        resultElement.innerHTML="0";
+        //resultElement.innerHTML="0";
+        updateResult("0");
         showZero = true;
         separateItem = true;
         calculatedResult = false;
@@ -61,6 +97,7 @@ function registerKey(eventObject) {
             {
                 operationsArray = ["0"];
                 resultElement.innerHTML="0";
+                updateResult("0");
                 showZero = true;
                 separateItem = true;
                 calculatedResult = false;
@@ -79,7 +116,8 @@ function registerKey(eventObject) {
                 {
                     operationsArray.pop();
                 }
-                resultElement.innerHTML=operationsArray.join("");
+                //resultElement.innerHTML=operationsArray.join("");
+                updateResult(operationsArray.join(""));
             }
         }
         
@@ -92,18 +130,21 @@ function registerKey(eventObject) {
         if(Number.isInteger(parseFloat(lastStringElement)) && lastStringElement[lastStringElement.length-1]!=".")
         {
                 operationsArray.push(operationsArray.pop()+key);
-                resultElement.innerHTML=operationsArray.join("");
+                //resultElement.innerHTML=operationsArray.join("");
+                updateResult(operationsArray.join(""));
         }
     }
     else if (key=="=")
     {  
         var result = parseFloat(evaulateExpression(operationsArray));
-        resultElement.innerHTML = result;
+        //resultElement.innerHTML = result;
+        updateResult(result);
         operationsArray = [result];
         if(calculatedResult && lastNumber!="" && lastOperator!="")
         {
             result = parseFloat(performOperation(result, lastNumber, lastOperator));
-            resultElement.innerHTML = result;
+            //resultElement.innerHTML = result;
+            updateResult(result);
             operationsArray = [result];
         }
         calculatedResult = true;
@@ -131,7 +172,8 @@ function registerKey(eventObject) {
                 if(calculatedResult)
                 {
                     operationsArray = [key];
-                    resultElement.innerHTML=key;
+                    //resultElement.innerHTML=key;
+                    updateResult(key);
                     calculatedResult= false;
                 }
             }
@@ -154,7 +196,8 @@ function registerKey(eventObject) {
         {
             operationsArray.push(key);
         }
-        resultElement.innerHTML=operationsArray.join("");
+        //resultElement.innerHTML=operationsArray.join("");
+        updateResult(operationsArray.join(""));
         separateItem = true;
     } 
 }
