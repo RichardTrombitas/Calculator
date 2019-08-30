@@ -74,7 +74,6 @@ function registerKey(eventObject) {
     if(key=="C")
     {
         operationsArray = ["0"];
-        //resultElement.innerHTML="0";
         updateResult("0");
         showZero = true;
         separateItem = true;
@@ -96,7 +95,6 @@ function registerKey(eventObject) {
             if(pos==0 && str.length==1)
             {
                 operationsArray = ["0"];
-                resultElement.innerHTML="0";
                 updateResult("0");
                 showZero = true;
                 separateItem = true;
@@ -116,7 +114,6 @@ function registerKey(eventObject) {
                 {
                     operationsArray.pop();
                 }
-                //resultElement.innerHTML=operationsArray.join("");
                 updateResult(operationsArray.join(""));
             }
         }
@@ -130,20 +127,17 @@ function registerKey(eventObject) {
         if(Number.isInteger(parseFloat(lastStringElement)) && lastStringElement[lastStringElement.length-1]!=".")
         {
                 operationsArray.push(operationsArray.pop()+key);
-                //resultElement.innerHTML=operationsArray.join("");
                 updateResult(operationsArray.join(""));
         }
     }
     else if (key=="=")
     {  
         var result = parseFloat(evaulateExpression(operationsArray));
-        //resultElement.innerHTML = result;
         updateResult(result);
         operationsArray = [result];
         if(calculatedResult && lastNumber!="" && lastOperator!="")
         {
             result = parseFloat(performOperation(result, lastNumber, lastOperator));
-            //resultElement.innerHTML = result;
             updateResult(result);
             operationsArray = [result];
         }
@@ -172,7 +166,6 @@ function registerKey(eventObject) {
                 if(calculatedResult)
                 {
                     operationsArray = [key];
-                    //resultElement.innerHTML=key;
                     updateResult(key);
                     calculatedResult= false;
                 }
@@ -196,7 +189,6 @@ function registerKey(eventObject) {
         {
             operationsArray.push(key);
         }
-        //resultElement.innerHTML=operationsArray.join("");
         updateResult(operationsArray.join(""));
         separateItem = true;
     } 
