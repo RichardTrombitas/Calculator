@@ -34,7 +34,6 @@ var lastNumber = "";
 
 function registerKey(eventObject) {
     makeDimmer(eventObject.target.id);
-
     key = eventObject.target.innerHTML;
 
     if(key=="C")
@@ -50,10 +49,44 @@ function registerKey(eventObject) {
     else if (key=="DEL")
     {
         
+        pos = operationsArray.length-1;
+        str = operationsArray[pos];
+        if(typeof str == "number")
+        {
+            //do nothing
+        }
+        else
+        {
+            if(pos==0 && str.length==1)
+            {
+                operationsArray = ["0"];
+                resultElement.innerHTML="0";
+                showZero = true;
+                separateItem = true;
+                calculatedResult = false;
+                lastOperator = "";
+                lastNumber = "";
+            }
+            else
+            {
+                newStr = str.substr(0,str.length-1);
+                if(newStr!="")
+                {
+                    operationsArray[pos] = newStr;
+                    
+                }
+                else
+                {
+                    operationsArray.pop();
+                }
+                resultElement.innerHTML=operationsArray.join("");
+            }
+        }
+        
+       
     }
     else if (key==".")
     {
-        //debugger;
         calculatedResult = false;
         lastStringElement = operationsArray[operationsArray.length-1];
         if(Number.isInteger(parseFloat(lastStringElement)) && lastStringElement[lastStringElement.length-1]!=".")
@@ -63,8 +96,7 @@ function registerKey(eventObject) {
         }
     }
     else if (key=="=")
-    {
-        debugger;
+    {  
         var result = parseFloat(evaulateExpression(operationsArray));
         resultElement.innerHTML = result;
         operationsArray = [result];
