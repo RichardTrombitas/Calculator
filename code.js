@@ -1,34 +1,48 @@
 window.onload = function(){
     var buttons = document.getElementsByClassName("button");
     for (el of buttons) {
+
+        // make the button text unselectable
+        el.style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" 
+        el.unselectable="on"
+        el.onselectstart="return false;" 
+        el.onmousedown="return false;"
+
+        // button depth visual effects
         el.onmouseover = makeBright;
         el.onmouseout = makeDim;
-        el.onmousedown = registerKey;
         el.onmouseup = makeBright;
+
+        // register button clicks
+        el.onmousedown = registerKey;
     }
 }
 
+// makes a button bright red (used when a cursor is hovering above it)
 function makeBright(eventObject) {
     var button = document.getElementById(eventObject.target.id);
     button.style.backgroundColor = "#ec3f3f";
 }
 
+// makes a button red (its default state)
 function makeDim(eventObject) {
     var button = document.getElementById(eventObject.target.id);
     button.style.backgroundColor = "#c02e2e";
 }
 
+// makes a button dark red (used when it is pressed down)
 function makeDimmer(id) {
     var button = document.getElementById(id);
     button.style.backgroundColor = "#641818";
 }
 
+// updates the calculator screen with the specified result and changes the font
+// of the text to make it fit
 function updateResult(res)
 {
     var resultElement = document.getElementById("result"); // calculator screen
     resultElement.innerHTML = res;
     len = resultElement.innerHTML.length;
-    console.log(len);
     if(len >= 10 && len < 13)
     {
         newSize = 44-len-4;
@@ -55,52 +69,61 @@ function updateResult(res)
     {
         resultElement.style.fontSize = "35px";
     }
-   
 }
 
-
-
+// the array in which we store the operations that need to be executed
 var operationsArray = ["0"];
+
+// keeps track of the need for displaying 0
 var showZero = true;
-var separateItem = true;
+
+// if it is false, the screen content will be overwritten 
+// (happens after a result is shown and the user enters a value)
+var separateItem = true; 
+
+// keeps track of the item's type: either an user-entered value or a computed result
 var calculatedResult = false;
+
+// these two variables are used for the automatic computation that takes place when
+// the equality symbol is pressed after an operation is executed
 var lastOperator = "";
 var lastNumber = "";
 
+// resets the calculator
+function reset(){
+    operationsArray = ["0"];
+    updateResult("0");
+    showZero = true;
+    separateItem = true;
+    calculatedResult = false;
+    lastOperator = "";
+    lastNumber = "";
+}
+
+// does the required action based on the type of button pressed
 function registerKey(eventObject) {
-    makeDimmer(eventObject.target.id);
-    key = eventObject.target.innerHTML;
+
+    makeDimmer(eventObject.target.id); // marks that the button is pressed
+    
+    key = eventObject.target.innerHTML; //the key that was pressed
 
     if(key=="C")
     {
-        operationsArray = ["0"];
-        updateResult("0");
-        showZero = true;
-        separateItem = true;
-        calculatedResult = false;
-        lastOperator = "";
-        lastNumber = "";
+        reset();
     }
     else if (key=="DEL")
     {
-        
         pos = operationsArray.length-1;
         str = operationsArray[pos];
         if(typeof str == "number")
         {
-            //do nothing
+            // do nothing
         }
         else
         {
             if(pos==0 && str.length==1)
             {
-                operationsArray = ["0"];
-                updateResult("0");
-                showZero = true;
-                separateItem = true;
-                calculatedResult = false;
-                lastOperator = "";
-                lastNumber = "";
+                reset();
             }
             else
             {
@@ -117,8 +140,6 @@ function registerKey(eventObject) {
                 updateResult(operationsArray.join(""));
             }
         }
-        
-       
     }
     else if (key==".")
     {
@@ -155,7 +176,6 @@ function registerKey(eventObject) {
             showZero = false;
             operationsArray = ["0"];
         }
-
         if(!isNaN(key)) // number
         {
             if(!isNaN(operationsArray[operationsArray.length-1]))
@@ -174,7 +194,6 @@ function registerKey(eventObject) {
                 lastNumber = key;
             }
         }
-
         if(isNaN(key)) // operator
         {
             lastOperator = key;
@@ -184,7 +203,6 @@ function registerKey(eventObject) {
                 operationsArray.pop();
             }
         }
-        
         if(separateItem)
         {
             operationsArray.push(key);
@@ -194,7 +212,8 @@ function registerKey(eventObject) {
     } 
 }
 
-
+// compares the precedence of two operators
+// returns true if the first operator has a higher or equal precedence than the second
 function higherOrEqualPrecedence(operatorA, operatorB)
 {
     if(operatorA == "*" || operatorA == "/")
@@ -211,11 +230,15 @@ function higherOrEqualPrecedence(operatorA, operatorB)
     return false;
 }
 
+// transforms an array of operations from infix to postfix notation
+// this makes evaluating our expressions easier
+// (for example: 2*3+4-1 -> 23*4+1-)
+// input: array - the array that needs to be transformed
+// output: newArray - the transformed array
 function infixToPostFix(array)
 {
     var myStack = [];
     var newArray = [];
-
     for(el of array)
     {
         if (isNaN(el)) // operator
@@ -232,22 +255,20 @@ function infixToPostFix(array)
                 }
                 myStack.push(el);
             }
-            
         }
         else // number
         {
            newArray.push(el);
         }
     }
-
     while(myStack.length!=0)
     {
         newArray.push(myStack.pop());
     }
-
     return newArray;
 }
 
+// performs an operation on two numbers and returns the result
 function performOperation(nr1, nr2, operator)
 {
     if(operator=="+")
@@ -268,6 +289,9 @@ function performOperation(nr1, nr2, operator)
     }
 }
 
+// makes use of the functions defined above to evaluate an expression
+// input: array - the array that holds the expression
+// output: the result
 function evaulateExpression(array)
 {
     array = infixToPostFix(array);
