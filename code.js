@@ -8,32 +8,9 @@ window.onload = function(){
         el.onselectstart="return false;" 
         el.onmousedown="return false;"
 
-        // button depth visual effects
-        el.onmouseover = makeBright;
-        el.onmouseout = makeDim;
-        el.onmouseup = makeBright;
-
         // register button clicks
         el.onmousedown = registerKey;
     }
-}
-
-// makes a button bright red (used when a cursor is hovering above it)
-function makeBright(eventObject) {
-    var button = document.getElementById(eventObject.target.id);
-    button.style.backgroundColor = "#ec3f3f";
-}
-
-// makes a button red (its default state)
-function makeDim(eventObject) {
-    var button = document.getElementById(eventObject.target.id);
-    button.style.backgroundColor = "#c02e2e";
-}
-
-// makes a button dark red (used when it is pressed down)
-function makeDimmer(id) {
-    var button = document.getElementById(id);
-    button.style.backgroundColor = "#641818";
 }
 
 // updates the calculator screen with the specified result and changes the font
@@ -101,10 +78,7 @@ function reset(){
 }
 
 // does the required action based on the type of button pressed
-function registerKey(eventObject) {
-
-    makeDimmer(eventObject.target.id); // marks that the button is pressed
-    
+function registerKey(eventObject) {    
     key = eventObject.target.innerHTML; //the key that was pressed
 
     if(key=="C")

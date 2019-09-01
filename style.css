@@ -24,3 +24,11 @@ td{
 #C, #DEL{
     font-size:30px;
 }
+
+.button:hover{
+    background-color:#ec3f3f;
+}
+
+.button:active{
+    background-color:#641818;
+}
