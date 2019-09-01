@@ -1,7 +1,12 @@
 
+body{
+    background-image:url(bg.png);
+}
+
 table{
-    margin:20% auto auto auto;
     background-color:#000000;
+    margin:auto;
+    margin-top:15%;
     font-family:sans-serif;
 }
 
