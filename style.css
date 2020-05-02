@@ -1,6 +1,6 @@
 
 body{
-    background-image:url(bg.png);
+    background-color: #313131;
 }
 
 table{
@@ -8,6 +8,7 @@ table{
     margin:auto;
     margin-top:15%;
     font-family:sans-serif;
+    box-shadow: 0px 0px 50px 10px;
 }
 
 td{
